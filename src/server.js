@@ -36,5 +36,16 @@ app.get('/',(req,res)=>{
 // Archivos estáticos
 app.use(express.static(path.join(__dirname,'public')))
 
+// Rutas 
+app.use(require('./routers/index.routes'))
+// Rutas 
+
+app.use(require('./routers/portafolio.routes'))
+
+
+const methodOverride = require('method-override');
+// Middlewares 
+
+app.use(methodOverride('_method'))
 
 module.exports = app
