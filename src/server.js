@@ -5,12 +5,14 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const session = require('express-session');
 const fileUpload = require('express-fileupload')
+
 // Inicializaciones
 const app = express()
 require('./config/passport')
 
 // Configuraciones 
-
+app.set('port',process.env.port || 3000)
+app.set('views',path.join(__dirname, 'views'))
 app.set('views',path.join(__dirname, 'views'))
 app.engine('.hbs',engine({
     defaultLayout:'main',
@@ -19,17 +21,16 @@ app.engine('.hbs',engine({
     extname:'.hbs'
 }))
 app.set('view engine','.hbs')
-
-
-// Configuraciones 
-app.set('port',process.env.port || 3000)
-app.set('views',path.join(__dirname, 'views'))
 app.use(fileUpload({
     useTempFiles : true,
     tempFileDir : './uploads'
 }));
+
+
+
 // Middlewares 
 app.use(express.urlencoded({extended:false}))
+app.use(methodOverride('_method'))
 app.use(session({ 
     secret: 'secret',
     resave:true,
@@ -37,7 +38,8 @@ app.use(session({
 }));
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(methodOverride('_method'))
+
+
 
 // Variables globales
 app.use((req,res,next)=>{

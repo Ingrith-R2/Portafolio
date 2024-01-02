@@ -1,7 +1,6 @@
 const{Router} = require('express')
-const {isAuthenticated} = require('../helpers/validate-auth')
-
 const router = Router()
+const {isAuthenticated} = require('../helpers/validate-auth.js')
 
 const { renderAllPortafolios,
         renderPortafolio,
@@ -22,6 +21,5 @@ router.get('/portafolio/edit/:id', isAuthenticated,renderEditPortafolioForm)
 router.put('/portafolio/edit/:id', isAuthenticated,updatePortafolio)
 
 router.delete('/portafolio/delete/:id', isAuthenticated,deletePortafolio)
-
 
 module.exports = router
